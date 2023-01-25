@@ -1,0 +1,27 @@
+#include<iostream>
+ using namespace std;
+ int main(){
+    int n;
+    cout<<"Enter Value of n:"<<endl;
+    cin>>n;
+    int arr[n],value,i;
+    cout<<"Enter elemnts of array:"<<endl;
+    for(i=0;i<n;i++)
+     cin>>arr[i];
+    cout<<"Enter The value to be found:";
+    cin>>value;
+    for(i=0;i<n;i++){
+        if(arr[i]==value){
+            cout<<"Element Found at position:"<<i+1;
+            // exit(0);
+        }
+        else
+          i=i+1;
+    
+    }
+    for(i=0;i<n;i++){
+        if(arr[i]!=value)
+        cout<<"Element Not Found"<<endl;
+    }
+ return 0;
+ }
