@@ -1,0 +1,77 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+// Function to print a matrix
+void printMatrix(vector<vector<int>> matrix) {
+    int size = matrix.size();
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            cout << matrix[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
+
+// Function to add two matrices
+vector<vector<int>> addMatrices(vector<vector<int>> A, vector<vector<int>> B) {
+    int size = A.size();
+    vector<vector<int>> C(size, vector<int>(size));
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            C[i][j] = A[i][j] + B[i][j];
+        }
+    }
+    return C;
+}
+
+// Function to subtract two matrices
+vector<vector<int>> subtractMatrices(vector<vector<int>> A, vector<vector<int>> B) {
+    int size = A.size();
+    vector<vector<int>> C(size, vector<int>(size));
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            C[i][j] = A[i][j] - B[i][j];
+        }
+    }
+    return C;
+}
+
+// Function to multiply two matrices using Strassen's algorithm
+vector<vector<int>> strassenMultiply(vector<vector<int>> A, vector<vector<int>> B) {
+    int size = A.size();
+
+    // Base case: if the matrices are 1x1, perform standard matrix multiplication
+    if (size == 1) {
+        vector<vector<int>> C(1, vector<int>(1));
+        C[0][0] = A[0][0] * B[0][0];
+        return C;
+    }
+
+    // Split the matrices into four submatrices
+    int newSize = size / 2;
+    vector<vector<int>> A11(newSize, vector<int>(newSize));
+    vector<vector<int>> A12(newSize, vector<int>(newSize));
+    vector<vector<int>> A21(newSize, vector<int>(newSize));
+    vector<vector<int>> A22(newSize, vector<int>(newSize));
+    vector<vector<int>> B11(newSize, vector<int>(newSize));
+    vector<vector<int>> B12(newSize, vector<int>(newSize));
+    vector<vector<int>> B21(newSize, vector<int>(newSize));
+    vector<vector<int>> B22(newSize, vector<int>(newSize));
+    for (int i = 0; i < newSize; i++) {
+        for (int j = 0; j < newSize; j++) {
+            A11[i][j] = A[i][j];
+            A12[i][j] = A[i][j + newSize];
+            A21[i][j] = A[i + newSize][j];
+            A22[i][j] = A[i + newSize][j + newSize];
+            B11[i][j] = B[i][j];
+            B12[i][j] = B[i][j + newSize];
+            B21[i][j] = B[i + newSize][j];
+            B22[i][j] = B[i + newSize][j + newSize];
+        }
+    }
+
+    // Compute the seven products recursively
+    vector<vector<int>> P1 = strassenMultiply(A11, subtract(B12, B22));
+    vector<vector<int
